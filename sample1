@@ -1,18 +1,13 @@
-import os
 from fastapi import FastAPI
-from dotenv import load_dotenv
+import os
 
-# Load our local environment variables
-load_dotenv()
-
-app = FastAPI(title="Base Payment Project")
+app = FastAPI(title="Customer Feedback API")
 
 @app.get("/")
-def read_root():
-    return {"message": "System is initialized. Waiting for Architect Agent to add Stripe integration."}
+def home():
+    return {"status": "Active", "mode": "Initial Base Code"}
 
-@app.get("/config-check")
-def check_env():
-    # Check if the agent created a .env or if we have keys
-    stripe_key = os.getenv("STRIPE_API_KEY", "NOT_FOUND")
-    return {"stripe_status": "Ready" if stripe_key != "NOT_FOUND" else "Missing API Key"}
+@app.post("/feedback")
+def receive_feedback(customer_id: str, text: str):
+    # Base code only logs the text. AI analysis is missing!
+    return {"message": "Feedback received", "customer": customer_id}
