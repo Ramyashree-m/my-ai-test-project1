@@ -1,0 +1,16 @@
+from fastapi import FastAPI
+
+app = FastAPI(title="AI Payment Gateway")
+
+@app.get("/")
+def health_check():
+    return {"status": "online", "message": "Payment Gateway API is running."}
+
+@app.post("/process-payment")
+def process_payment(amount: float, currency: str = "USD"):
+    # TODO: The Architect Agent needs to add the Stripe API integration here
+    # TODO: The Architect Agent needs to add the PostgreSQL database logging here
+    return {
+        "status": "success", 
+        "message": f"Successfully processed {amount} {currency}"
+    }
