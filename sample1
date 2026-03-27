@@ -1,16 +1,18 @@
+import os
 from fastapi import FastAPI
+from dotenv import load_dotenv
 
-app = FastAPI(title="AI Payment Gateway")
+# Load our local environment variables
+load_dotenv()
+
+app = FastAPI(title="Base Payment Project")
 
 @app.get("/")
-def health_check():
-    return {"status": "online", "message": "Payment Gateway API is running."}
+def read_root():
+    return {"message": "System is initialized. Waiting for Architect Agent to add Stripe integration."}
 
-@app.post("/process-payment")
-def process_payment(amount: float, currency: str = "USD"):
-    # TODO: The Architect Agent needs to add the Stripe API integration here
-    # TODO: The Architect Agent needs to add the PostgreSQL database logging here
-    return {
-        "status": "success", 
-        "message": f"Successfully processed {amount} {currency}"
-    }
+@app.get("/config-check")
+def check_env():
+    # Check if the agent created a .env or if we have keys
+    stripe_key = os.getenv("STRIPE_API_KEY", "NOT_FOUND")
+    return {"stripe_status": "Ready" if stripe_key != "NOT_FOUND" else "Missing API Key"}
